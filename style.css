@@ -75,6 +75,10 @@ input, button {
     padding: 20px;
     border-radius: 10px;
 }
+.library__form-wrapper {
+    
+}
+
 .book__title {
 }
 .book__author {
@@ -89,4 +93,12 @@ input, button {
 
 .open {
     transform: scale(1);
+}
+.dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .3);
 }
