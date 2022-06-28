@@ -1,6 +1,6 @@
 const books = document.querySelector('.library__books');
 const addBtn = document.querySelector('.library__show-form');
-const popup = document.querySelector('.library__form-wrapper');
+const popup = document.querySelector('.library__form-popup');
 const form = document.querySelector('.library__form');
 const title = document.querySelector('.library__title');
 const author = document.querySelector('.library__author');
@@ -64,7 +64,7 @@ function openModal(trigger, modal, close) {
         document.body.style.overflow = 'hidden';
     });
 
-    close.addEventListener('click', () => {
+    close.addEventListener('click', (e) => {
         if ((title.value && author.value && pages.value)) {
             popup.classList.remove('dark');
             modal.classList.remove('open');
@@ -82,6 +82,14 @@ function addBook(e) {
         document.body.classList.remove('dark');
     }
 }
+
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+        popup.classList.remove('dark');
+        form.classList.remove('open');
+        form.reset();
+    }
+})
 
 addBookBtn.addEventListener('click', addBook);
 openModal(addBtn, form, addBookBtn);
