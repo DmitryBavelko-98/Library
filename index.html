@@ -9,14 +9,22 @@
 </head>
 <body>
     <div class="wrapper">
-        <div class="container">
-            <main class="main">
-                <section class="library">
-                    <button class="library__show-form">
-                        Add
+        <header class="header">
+            <div class="container">
+                <div class="header__title">
+                    My library
+                </div>
+            </div>
+        </header>
+        <main class="main">
+            <section class="library">
+                <div class="container">
+                    <button class="library__show-modal">
+                        + Add book
                     </button>
-                   <div class="library__overlay">
+                    <div class="library__overlay">
                     <form name="book-form" action="" method="get" class="library__form">
+                        <h2 class="library__info">Info</h2>
                         <input class="library__title" type="text" name="title" placeholder="Title" required>
                         <input class="library__author" type="text" name="Author" placeholder="Author" required>
                         <input class="library__pages" type="number" name="Pages" placeholder="Pages" required>
@@ -26,12 +34,19 @@
                         </div>
                         <button type="submit" class="library__btn-add">Add book</button>
                     </form>
-                   </div>
+                    </div>
                     <div class="library__books">
                     </div>
-                </section>
-            </main>
-        </div>
+                </div>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__copyright">
+                    Copyright © 2022
+                </div>
+            </div>
+        </footer>
     </div>
     <script src="./script.js"></script>
 </body>
