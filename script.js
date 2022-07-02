@@ -94,8 +94,8 @@ function renderBooks(items) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    const myLibrary = JSON.parse(localStorage.getItem('library'))
-    renderBooks(myLibrary);
+    const library = JSON.parse(localStorage.getItem('library'))
+    renderBooks(library);
 })
 
 popup.addEventListener('click', (e) => {
