@@ -94,7 +94,7 @@ function renderBooks(items) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    myLibrary = JSON.parse(localStorage.getItem('library'))
+    const myLibrary = JSON.parse(localStorage.getItem('library'))
     renderBooks(myLibrary);
 })
 
