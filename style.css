@@ -114,7 +114,8 @@ input, button {
 .library__books {
     display: grid;
     grid-template-columns: repeat(auto-fit, 30%);
-    gap: 30px;
+    gap: 40px;
+    justify-content: center;
 }
 .library__show-modal {
     height: 50px;
