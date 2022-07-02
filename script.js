@@ -8,8 +8,6 @@ const pages = document.querySelector('.library__pages');
 const isRead = document.querySelector('.library__read');
 const addBookBtn = document.querySelector('.library__btn-add');
 
-const inputs = document.querySelectorAll('input');
-
 let myLibrary = [];
 
 function Book(title, author, pages, isRead) {
