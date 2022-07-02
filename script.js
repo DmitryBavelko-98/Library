@@ -1,5 +1,5 @@
 const books = document.querySelector('.library__books');
-const addBtn = document.querySelector('.library__show-form');
+const addBtn = document.querySelector('.library__show-modal');
 const popup = document.querySelector('.library__overlay');
 const form = document.querySelector('.library__form');
 const title = document.querySelector('.library__title');
@@ -19,17 +19,68 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead ? true : false;
 }
 
-Book.prototype.info = function () {
-    console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.isRead}`);
-} 
+function openModal(trigger, modal, close) {
+    trigger.addEventListener('click', () => {
+        popup.classList.add('dark')
+        modal.classList.add('open');
+        lockBody();
+    });
+
+    close.addEventListener('click', (e) => {
+        if ((title.value && author.value && pages.value)) {
+            closeModal(popup, modal);
+            unlockBody();
+        }
+    })
+}
+
+function closeModal(popup, modal) {
+    popup.classList.remove('dark');
+    modal.classList.remove('open');
+    modal.reset();
+}
+
+function lockBody () {
+    document.body.style.overflow = 'hidden';
+}
+
+function unlockBody () {
+    document.body.style.overflow = '';
+}
+
+function setLocaleStorage() {
+    localStorage.setItem('library', JSON.stringify(myLibrary));
+}
+
+function addBook(e) {
+    if ((title.value && author.value && pages.value)) {
+        const book = new Book(title.value, author.value, pages.value, isRead.checked);
+        myLibrary.push(book);
+        books.innerHTML = '';
+        setLocaleStorage();
+        renderBooks(myLibrary);
+    }
+}
+
+function markAsRead (item, e) {
+    item.isRead = !item.isRead;
+    e.target.innerHTML = item.isRead ? 'Read' : 'Not read';
+    setLocaleStorage();
+}
+
+function removeBook(i, e) {
+    e.target.parentNode.remove();
+    myLibrary.splice(i, 1);
+    setLocaleStorage();
+}
 
 function renderBooks(items, pos = 0) {
     items.map((item, i) => {
         const book = document.createElement('div');
         book.innerHTML = `
-            <div class="book__title">${item.title}</div>
+            <div class="book__title">"${item.title}"</div>
             <div class="book__author">${item.author}</div>
-            <div class="book__pages">${item.pages}</div>
+            <div class="book__pages">${item.pages} pages</div>
             <button class="book__read">${item.isRead ? 'Read' : 'Not read'}</button>
             <button class="book__remove">Remove</button>
         `;
@@ -37,54 +88,12 @@ function renderBooks(items, pos = 0) {
         book.classList.add('library__book');
 
         const read = document.querySelectorAll('.book__read');
-        read.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                item.isRead = !item.isRead;
-                e.target.innerHTML = item.isRead ? 'Read' : 'Not read';
-            })
-        })
+        read.forEach(btn => btn.addEventListener('click', (e) => markAsRead(item, e)));
         
         const remove = document.querySelectorAll('.book__remove');
-        remove.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.target.parentNode.remove();
-                myLibrary.splice(i, 1)
-                localStorage.setItem('library', JSON.stringify(myLibrary));
-            })
-        })
+        remove.forEach((btn) => btn.addEventListener('click', (e) => removeBook(i, e)));
     })
 }
-
-function openModal(trigger, modal, close) {
-    trigger.addEventListener('click', () => {
-        popup.classList.add('dark')
-        modal.classList.add('open')
-        document.body.style.overflow = 'hidden';
-    });
-
-    close.addEventListener('click', (e) => {
-        if ((title.value && author.value && pages.value)) {
-            popup.classList.remove('dark');
-            modal.classList.remove('open');
-            modal.reset();
-            document.body.style.overflow = '';
-        }
-    })
-}
-
-
-function addBook(e) {
-    if ((title.value && author.value && pages.value)) {
-        const book = new Book(title.value, author.value, pages.value, isRead.checked);
-        myLibrary.push(book);
-        books.innerHTML = '';
-        document.body.classList.remove('dark');
-        localStorage.setItem('library', JSON.stringify(myLibrary));
-        renderBooks(myLibrary);
-    }
-}
-
-// localStorage.clear()
 
 window.addEventListener('DOMContentLoaded', () => {
     myLibrary = JSON.parse(localStorage.getItem('library'))
@@ -93,9 +102,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 popup.addEventListener('click', (e) => {
     if (e.target === popup) {
-        popup.classList.remove('dark');
-        form.classList.remove('open');
-        form.reset();
+        closeModal(popup, form);
+        unlockBody();
     }
 })
 
