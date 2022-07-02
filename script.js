@@ -8,7 +8,7 @@ const pages = document.querySelector('.library__pages');
 const isRead = document.querySelector('.library__read');
 const addBookBtn = document.querySelector('.library__btn-add');
 
-let myLibrary = [];
+let myLibrary = JSON.parse(localStorage.getItem('library')) || [];
 
 function Book(title, author, pages, isRead) {
     this.title = title;
@@ -72,7 +72,7 @@ function removeBook(i, e) {
     setLocaleStorage();
 }
 
-function renderBooks(items, pos = 0) {
+function renderBooks(items) {
     items.map((item, i) => {
         const book = document.createElement('div');
         book.innerHTML = `
