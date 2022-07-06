@@ -10,11 +10,13 @@ const addBookBtn = document.querySelector('.library__btn-add');
 
 let myLibrary = JSON.parse(localStorage.getItem('library')) || [];
 
-function Book(title, author, pages, isRead) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead ? true : false;
+class Book {
+    constructor (title, author, pages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead ? true : false;
+    }
 }
 
 function openModal(trigger, modal, close) {
